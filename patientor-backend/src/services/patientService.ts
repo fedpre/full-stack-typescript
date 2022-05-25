@@ -4,15 +4,15 @@ import { v1 as uuid } from 'uuid';
 
 
 const getNonSensitivePatientData = (): nonSensitivePatientData[] => {
-  return patientEntries.map(({ id, name, dateOfBirth, gender, occupation }) => ({
-    id, name, dateOfBirth, gender, occupation
+  return patientEntries.map(({ id, name, dateOfBirth, gender, occupation, ssn }) => ({
+    id, name, dateOfBirth, gender, occupation, ssn
   }));
 };
 
 const getPatientById = (id: string): SinglePatient => {
-  const patientFound: SinglePatient = patientEntries.find(patient => patient.id === id)
-  return patientFound
-}
+  const patientFound: SinglePatient = patientEntries.find(patient => patient.id === id);
+  return patientFound;
+};
 
 const addPatient = (patient: newPatient): Patient => {
   const newPatientEntry = {

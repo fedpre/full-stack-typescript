@@ -1,17 +1,18 @@
 import React from "react";
 import axios from "axios";
-import { BrowserRouter as Router, Route, Link, Routes } from "react-router-dom";
+import { Route, Link, Routes } from "react-router-dom";
 import { Button, Divider, Container } from "@material-ui/core";
 
 import { apiBaseUrl } from "./constants";
 import { useStateValue } from "./state";
 import { Patient } from "./types";
 
-import PatientListPage from "./PatientListPage";
 import { Typography } from "@material-ui/core";
+import PatientListPage from "./PatientListPage";
+import PatientDetail from "./PatientDetail";
 
 const App = () => {
-  const [, dispatch] = useStateValue();
+  const [{ patients }, dispatch] = useStateValue();
   React.useEffect(() => {
     void axios.get<void>(`${apiBaseUrl}/ping`);
 
@@ -30,7 +31,6 @@ const App = () => {
 
   return (
     <div className="App">
-      <Router>
         <Container>
           <Typography variant="h3" style={{ marginBottom: "0.5em" }}>
             Patientor
@@ -41,9 +41,9 @@ const App = () => {
           <Divider hidden />
           <Routes>
             <Route path="/" element={<PatientListPage />} />
+            <Route path="/:id" element={<PatientDetail patients={patients}/>} />
           </Routes>
         </Container>
-      </Router>
     </div>
   );
 };

@@ -1,7 +1,8 @@
-export type nonSensitivePatientData = Omit<Patient, 'ssn' | 'entries'>;
+export type nonSensitivePatientData = Omit<Patient, 'entries'>;
 export type newPatient = Omit<Patient, 'id'>;
-export type SinglePatient = Patient | undefined
+export type SinglePatient = Patient | undefined;
 
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface Entry {
 }
 
