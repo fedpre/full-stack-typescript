@@ -38,6 +38,7 @@ export const reducer = (state: State, action: Action): State => {
       };
     case "GET_PATIENT":
       return state;
+      
     case "ADD_PATIENT":
       return {
         ...state,

@@ -3,10 +3,11 @@ import { useParams } from 'react-router-dom';
 import { Patient } from '../types';
 import FemaleIcon from '@mui/icons-material/Female';
 import MaleIcon from '@mui/icons-material/Male';
-import { useStateValue } from "../state";
+import { useStateValue, setPatient, getPatient } from "../state";
 import React from 'react';
 import axios from 'axios';
 import { apiBaseUrl } from "../constants";
+
 
 const PatientDetail = () => {
   const { id } = useParams<{ id: string }>();
@@ -21,9 +22,10 @@ const PatientDetail = () => {
           const response = await axios.get<Patient>(
             `${apiBaseUrl}/patients/${id}`
             );
-            
-            dispatch({ type: 'SET_PATIENT', payload: response.data });
-            dispatch({ type: "GET_PATIENT" });
+            //dispatch({ type: 'SET_PATIENT', payload: response.data });
+            //dispatch({ type: "GET_PATIENT" });
+            dispatch(setPatient(response.data));
+            dispatch(getPatient());
           } catch (e) {
             console.error(e);
           }
