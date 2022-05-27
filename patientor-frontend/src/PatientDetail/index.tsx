@@ -1,24 +1,36 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { useParams } from 'react-router-dom';
 import { Patient } from '../types';
 import FemaleIcon from '@mui/icons-material/Female';
 import MaleIcon from '@mui/icons-material/Male';
+import { useStateValue } from "../state";
+import React from 'react';
+import axios from 'axios';
+import { apiBaseUrl } from "../constants";
 
-type Props = {
-  patients: { [id: string]: Patient };
-};
-
-const PatientDetail = (props: Props) => {
+const PatientDetail = () => {
   const { id } = useParams<{ id: string }>();
-  let patient;
-  
-  if (!props.patients) {
-    return <div>Loading</div>;
-  }
-  console.log(props.patients);
-  
-  if (id != undefined && id in props.patients != undefined) {
-    patient = props.patients[id];
-  }
+
+  const [{ patient }, dispatch] = useStateValue();
+  React.useEffect(() => {
+    const fetchPatient = async () => {
+      dispatch({ type: "GET_PATIENT" });
+      
+      if (id !== undefined && patient.id !== id) {
+        try {
+          const response = await axios.get<Patient>(
+            `${apiBaseUrl}/patients/${id}`
+            );
+            
+            dispatch({ type: 'SET_PATIENT', payload: response.data });
+            dispatch({ type: "GET_PATIENT" });
+          } catch (e) {
+            console.error(e);
+          }
+        }
+      };
+      void fetchPatient();
+    }, [dispatch]);
 
   return (
     <div>
