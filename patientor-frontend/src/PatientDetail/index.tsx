@@ -33,6 +33,7 @@ const PatientDetail = () => {
       void fetchPatient();
     }, [dispatch]);
 
+
   return (
     <div>
       <div style={{ "display": "flex", "alignItems": "center"}}>
