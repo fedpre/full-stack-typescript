@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
+
 import { useParams } from 'react-router-dom';
 import { Patient } from '../types';
 import FemaleIcon from '@mui/icons-material/Female';
@@ -13,6 +13,7 @@ const PatientDetail = () => {
   const { id } = useParams<{ id: string }>();
 
   const [{ patient }, dispatch] = useStateValue();
+
   React.useEffect(() => {
     const fetchPatient = async () => {
       dispatch({ type: "GET_PATIENT" });
@@ -22,8 +23,6 @@ const PatientDetail = () => {
           const response = await axios.get<Patient>(
             `${apiBaseUrl}/patients/${id}`
             );
-            //dispatch({ type: 'SET_PATIENT', payload: response.data });
-            //dispatch({ type: "GET_PATIENT" });
             dispatch(setPatient(response.data));
             dispatch(getPatient());
           } catch (e) {
@@ -48,8 +47,25 @@ const PatientDetail = () => {
       <p>ssh: {patient?.ssn}</p>
       <p>occupation: {patient?.occupation}</p>
       <p>DOB: {patient?.dateOfBirth}</p>
+
+      <div>
+        <h2>Entries</h2>
+        {
+          patient.entries[0] !== undefined
+          ? <>
+              <p>{patient.entries[0].date} <i>{patient.entries[0].description}</i></p>
+                <ul>
+                  {patient.entries[0].diagnosisCodes?.map(code => (
+                    <li key={code}>{code}</li>
+                   ))
+                  }
+                </ul>
+            </>
+          :<></>
+        }
+        
+      </div>
     </div>
   );
 };
-
 export default PatientDetail;

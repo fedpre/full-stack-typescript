@@ -1,6 +1,6 @@
-import { Gender, newPatient } from "./types";
+import { Entry, Gender, newPatient } from "./types";
 
-type PatientEntry = { name: string, dateOfBirth: string, ssn: string, gender: Gender, occupation: string};
+type PatientEntry = { name: string, dateOfBirth: string, ssn: string, gender: Gender, occupation: string, entries: Entry[]};
 
 const checkPatientEntry = (patient: PatientEntry): newPatient =>  {
   const newEntry: newPatient = {
@@ -9,6 +9,7 @@ const checkPatientEntry = (patient: PatientEntry): newPatient =>  {
     ssn: parseString(patient.ssn, 'ssn'),
     gender: parseGender(patient.gender),
     occupation: parseString(patient.occupation, 'occupation'),
+    entries: patient.entries
   };
   return newEntry;
 };
