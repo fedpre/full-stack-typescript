@@ -7,8 +7,7 @@ import { useStateValue, setPatient, getPatient, setDiagnosis, getDiagnosis } fro
 import React from 'react';
 import axios from 'axios';
 import { apiBaseUrl } from "../constants";
-
-
+import EntryDetails from '../components/EntryDetails';
 
 const PatientDetail = () => {
   const { id } = useParams<{ id: string }>();
@@ -64,29 +63,11 @@ const PatientDetail = () => {
       <p>ssh: {patient?.ssn}</p>
       <p>occupation: {patient?.occupation}</p>
       <p>DOB: {patient?.dateOfBirth}</p>
-
       <div>
-        <h2>Entries</h2>
-        {
-          patient.entries[0] !== undefined && diagnosis[0] !== undefined
-          ? <>
-              <p>{patient.entries[0].date} <i>{patient.entries[0].description}</i></p>
-                <ul>
-                  {patient.entries[0].diagnosisCodes?.map(code => {
-                    const codeFound = diagnosis.find(d => d.code === code);
-                    if(codeFound === undefined) {
-                      return (<li key={code}>{code}</li>);
-                    } else {
-                      return (<li key={code}>{code} {codeFound.name}</li>);
-                    }
-                  })
-                  }
-
-                </ul>
-            </>
-          :<></>
-        }
-        
+        <EntryDetails 
+          diagnosis={diagnosis}
+          patient={patient}
+        />
       </div>
     </div>
   );
