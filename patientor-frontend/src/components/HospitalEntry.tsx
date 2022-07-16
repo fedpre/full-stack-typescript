@@ -1,24 +1,22 @@
 import React from 'react';
-import { Diagnosis, Patient } from '../types';
+import { Diagnosis, Entry } from '../types';
 
 interface Props {
-  diagnosis: Array<Diagnosis>;
-  patient: Patient
+  diagnosis: Array<Diagnosis>
+  entry: Entry
 }
 
-const HospitalEntry = (props: Props) => {
-  console.log(props.patient.entries[0]?.type);
+const HospitalEntry: React.FC<Props> = ({ entry, diagnosis}) => {
   
   return (
     <div>
-      <h2>Entries</h2>
         {
-          props.patient.entries[0] !== undefined && props.diagnosis[0] !== undefined
-          ? <>
-              <p>{props.patient.entries[0].date} <i>{props.patient.entries[0].description}</i></p>
+          entry !== undefined && diagnosis[0] !== undefined
+          ? <div style={{"border": "1px solid #000", "marginBottom": "20px", "padding": "10px", "borderRadius": "5px"}}>
+              <p>{entry.date} <i>{entry.description}</i></p>
                 <ul>
-                  {props.patient.entries[0].diagnosisCodes?.map(code => {
-                    const codeFound = props.diagnosis.find(d => d.code === code);
+                  {entry.diagnosisCodes?.map(code => {
+                    const codeFound = diagnosis.find(d => d.code === code);
                     if(codeFound === undefined) {
                       return (<li key={code}>{code}</li>);
                     } else {
@@ -28,7 +26,8 @@ const HospitalEntry = (props: Props) => {
                   }
 
                 </ul>
-            </>
+                <p>Diagnose by MD House</p>
+            </div>
           :<></>
         }
     </div>

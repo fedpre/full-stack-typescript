@@ -1,23 +1,24 @@
 import React from 'react';
-import { Diagnosis, Patient } from '../types';
+import { Diagnosis, Entry } from '../types';
 import HospitalEntry from './HospitalEntry';
 import OccupationalHealthcareEntry from './OccupationalHealthcareEntry';
 
 interface Props {
-  diagnosis: Array<Diagnosis>;
-  patient: Patient
+  diagnosis: Array<Diagnosis>
+  entry: Entry
 }
 
-const EntryDetails = (props: Props) => {
-  switch(props.patient.entries[0]?.type) {
+const EntryDetails: React.FC<Props> = ({ entry, diagnosis }) => {
+
+  switch(entry.type) {
     case "Hospital":
-      return <HospitalEntry diagnosis={props.diagnosis} patient={props.patient} />;
+      return <HospitalEntry diagnosis={diagnosis} entry={entry} />;
 
     case "OccupationalHealthcare":
-      return <OccupationalHealthcareEntry diagnosis={props.diagnosis} patient={props.patient} />;
+      return <OccupationalHealthcareEntry diagnosis={diagnosis} entry={entry} />;
 
     case "HealthCheck":
-      return <HospitalEntry diagnosis={props.diagnosis} patient={props.patient} />;
+      return <HospitalEntry diagnosis={diagnosis} entry={entry} />;
 
     default:
       return <></>;
