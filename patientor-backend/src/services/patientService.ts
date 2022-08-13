@@ -24,10 +24,14 @@ const addPatient = (patient: newPatient): Patient => {
 };
 
 const addEntryToPatient = (entry: Entry, id: string) => {
+  const newFinalEntry = {
+    ...entry,
+    id: uuid(),
+  };
   let success = false;
   patientEntries.map((patientEntry) => {
     if (patientEntry.id === id) {
-      patientEntry.entries.push(entry);
+      patientEntry.entries.push(newFinalEntry);
       success = true;
     }
   });
